@@ -1,4 +1,10 @@
-#include <stdio.h>
+//-----------------------------------------------------------------------------
+//
+// C learning excercise course
+//
+// Licensed after GNU GPL v3
+//
+//-----------------------------------------------------------------------------#include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
 

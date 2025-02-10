@@ -5,7 +5,7 @@
 // Licensed after GNU GPL v3
 //
 //-----------------------------------------------------------------------------
-#include "stdio.h"
+#include "defs.h"
 
 void output_unary_op(unsigned short v) {
     if (v & 0x04) {
@@ -102,14 +102,12 @@ void decoder_16bit(unsigned short v)
 
 int main() {
     unsigned short v;
-
     while (1 == scanf(" 0x%hx", &v)) {
 #ifdef DEBUG
         printf("The new entered value: 0x%02hx (hexagonal), %hu (decimal)\n", v, v);
 #endif
         decoder_16bit(v);
     }
-
     if (feof(stdin)) {
         printf("End of file reached\n");
     } else if (ferror(stdin)) {
