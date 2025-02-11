@@ -77,26 +77,38 @@ unsigned short bits_view_of_reg(char reg) {
 }
 
 void handle_unop(char **words, OP op) {
-    unsigned short reg_bits = 0;
+    unsigned short res_bits = 0;
     if (MOVI == op) {
         // TODO what if not a unsigned short number? And less than 128
         unsigned short num = (unsigned short)strtoul(words[2], NULL, 0);
         printf("0x%02hx ", num);
         return;
     }
-    reg_bits = bits_view_of_reg(words[1][0]);
+    res_bits = bits_view_of_reg(words[1][0]);
     if (IN == op) {
-        reg_bits |= 0xc0;
+        res_bits |= 0xc0;
     }
     else if (OUT == op) {
-        reg_bits |= 0xc4;
+        res_bits |= 0xc4;
     }
-    printf("0x%02hx ", reg_bits);
+    printf("0x%02hx ", res_bits);
     return;
 }
 
 void handle_binop(char **words, OP op) {
-
+    unsigned short res_bits = (bits_view_of_reg(words[1][0]) << 2)
+                            |  bits_view_of_reg(words[2][0]);
+    if (ADD == op) {
+        res_bits |= 0x80;
+    } else if (SUB == op) {
+        res_bits |= 0x90;
+    } else if (MUL == op) {
+        res_bits |= 0xa0;
+    } else if (DIV == op) {
+        res_bits |= 0xb0;
+    }
+    printf("0x%02hx ", res_bits);
+    return;
 }
 
 void coder_16bit(const char *cmd) {
